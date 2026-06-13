@@ -1,0 +1,22 @@
+[
+  { "id": "cb9cc18d-53cb-4fac-8f16-a13536c327c0", "firstName": "Anna",      "lastName": "Rossi",     "profilePicture": "https://i.pravatar.cc/150?img=1" },
+  { "id": "09e25ddb-3022-42d9-a2f0-64696e7341f3", "firstName": "Marco",     "lastName": "Lopez",     "profilePicture": "https://i.pravatar.cc/150?img=2" },
+  { "id": "d6c272cd-1002-4171-90dc-058e237d6862", "firstName": "Sofia",     "lastName": "Chen",      "profilePicture": "https://i.pravatar.cc/150?img=3" },
+  { "id": "5c5852c4-8e58-4018-870e-11bc82fc413e", "firstName": "Liam",      "lastName": "O'Brien",   "profilePicture": "https://i.pravatar.cc/150?img=4" },
+  { "id": "78a39721-c4b8-42a0-9829-82444f13db8d", "firstName": "Mia",       "lastName": "Tanaka",    "profilePicture": "https://i.pravatar.cc/150?img=5" },
+  { "id": "d158fc9d-3add-4f02-9569-5ad0f3c670ad", "firstName": "Noah",      "lastName": "Garcia",    "profilePicture": "https://i.pravatar.cc/150?img=6" },
+  { "id": "68fe6864-0939-4ff6-aaa8-a66d48f48f7c", "firstName": "Emma",      "lastName": "Müller",    "profilePicture": "https://i.pravatar.cc/150?img=7" },
+  { "id": "80d6da33-38c3-41bf-b834-5096b69da602", "firstName": "James",     "lastName": "Kim",       "profilePicture": "https://i.pravatar.cc/150?img=8" },
+  { "id": "f7f74ab4-024d-487c-a836-5fd1891eab20", "firstName": "Olivia",    "lastName": "Martins",   "profilePicture": "https://i.pravatar.cc/150?img=9" },
+  { "id": "95549f7e-7f6a-4b20-9ed2-5d553a700245", "firstName": "Ethan",     "lastName": "Patel",     "profilePicture": "https://i.pravatar.cc/150?img=10" },
+  { "id": "d2004fdb-5ab3-4c77-af82-ebaa234e187d", "firstName": "Ava",       "lastName": "Johansson", "profilePicture": "https://i.pravatar.cc/150?img=11" },
+  { "id": "e4b2b471-a8bf-40ff-9a45-b0704227e829", "firstName": "Lucas",     "lastName": "Ferreira",  "profilePicture": "https://i.pravatar.cc/150?img=12" },
+  { "id": "95480504-2d4d-4095-a0f2-bc6ab96ae96e", "firstName": "Isabella",  "lastName": "Nguyen",    "profilePicture": "https://i.pravatar.cc/150?img=13" },
+  { "id": "675cdfb4-45a0-4ffc-8ec1-b36130cfe2d7", "firstName": "Mason",     "lastName": "Ali",       "profilePicture": "https://i.pravatar.cc/150?img=14" },
+  { "id": "58b20107-b380-4062-b64b-829f8e4c582b", "firstName": "Charlotte", "lastName": "Dubois",    "profilePicture": "https://i.pravatar.cc/150?img=15" },
+  { "id": "0583f0ac-e29a-41ce-8782-41ff20b5c743", "firstName": "Aiden",     "lastName": "Santos",    "profilePicture": "https://i.pravatar.cc/150?img=16" },
+  { "id": "e6ed8679-b79f-4be2-aa67-f84d1cec20f2", "firstName": "Amelia",    "lastName": "Kovač",     "profilePicture": "https://i.pravatar.cc/150?img=17" },
+  { "id": "3e15c55b-d2a0-4b8f-be01-44e168ee21f2", "firstName": "Elijah",    "lastName": "Park",      "profilePicture": "https://i.pravatar.cc/150?img=18" },
+  { "id": "ad91b68a-7b94-45bf-bf02-f483d9fdceed", "firstName": "Harper",    "lastName": "Wilson",    "profilePicture": "https://i.pravatar.cc/150?img=19" },
+  { "id": "42242a9b-bf54-4131-a23a-baf7dedc675d", "firstName": "Sebastian", "lastName": "Ruiz",      "profilePicture": "https://i.pravatar.cc/150?img=20" }
+]

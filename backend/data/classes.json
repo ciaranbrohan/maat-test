@@ -1,0 +1,122 @@
+[
+  {
+    "id": "8f18b27c-dfa7-4f5d-be97-ae72e712e001",
+    "name": "Essentials Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Tuesday",
+    "time": "19:45",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 20
+  },
+  {
+    "id": "643e173b-9374-4f48-941e-fb2ca812478a",
+    "name": "Essentials Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Wednesday",
+    "time": "12:00",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 20
+  },
+  {
+    "id": "5f6d8819-de84-459d-b80b-95658d08913b",
+    "name": "Essentials Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Friday",
+    "time": "19:45",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 20
+  },
+  {
+    "id": "8679699a-fa39-4e39-9542-b70514af86e3",
+    "name": "Essentials Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Saturday",
+    "time": "12:00",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 20
+  },
+  {
+    "id": "b27fd07f-dc38-4cc4-8ea0-59078910d454",
+    "name": "Mixed Level BJJ",
+    "instructorName": "Ciaran Brohan",
+    "day": "Tuesday",
+    "time": "18:30",
+    "repeat": "weekly",
+    "duration": 75,
+    "capacity": 25
+  },
+  {
+    "id": "332524fa-75f6-4a27-829d-6b624badecf9",
+    "name": "Mixed Level BJJ",
+    "instructorName": "Ciaran Brohan",
+    "day": "Thursday",
+    "time": "19:15",
+    "repeat": "weekly",
+    "duration": 75,
+    "capacity": 25
+  },
+  {
+    "id": "d40c0d13-1e9c-435f-9a36-31b67c16822b",
+    "name": "Nogi Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Monday",
+    "time": "19:15",
+    "repeat": "weekly",
+    "duration": 75,
+    "capacity": 25
+  },
+  {
+    "id": "76d11968-4fbf-4d19-992f-3353690431c6",
+    "name": "Nogi Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Wednesday",
+    "time": "18:15",
+    "repeat": "weekly",
+    "duration": 75,
+    "capacity": 25
+  },
+  {
+    "id": "3a057d38-42da-40c8-9100-c50242a0d4d4",
+    "name": "Nogi Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Friday",
+    "time": "18:30",
+    "repeat": "weekly",
+    "duration": 75,
+    "capacity": 25
+  },
+  {
+    "id": "7b1e1a26-9adb-4a39-836f-d8644a1b9f67",
+    "name": "Teens Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Saturday",
+    "time": "10:30",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 15
+  },
+  {
+    "id": "7f853611-a50f-494c-bd8f-ea04eb64f288",
+    "name": "Little Ninjas",
+    "instructorName": "Sean Murphy",
+    "day": "Saturday",
+    "time": "09:00",
+    "repeat": "weekly",
+    "duration": 45,
+    "capacity": 15
+  },
+  {
+    "id": "3f7ef582-a084-4a4c-acdf-3ab3a5b67a1f",
+    "name": "Juvenile Jiu-Jitsu",
+    "instructorName": "Sean Murphy",
+    "day": "Saturday",
+    "time": "09:50",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 15
+  }
+]
