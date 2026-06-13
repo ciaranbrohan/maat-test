@@ -6,6 +6,7 @@ import { ClassEntity } from './classes/class.entity';
 import { CheckInEntity } from './checkins/checkin.entity';
 import { MembersModule } from './members/members.module';
 import { ClassesModule } from './classes/classes.module';
+import { CheckInsModule } from './checkins/checkins.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ClassesModule } from './classes/classes.module';
     }),
     MembersModule,
     ClassesModule,
+    CheckInsModule,
   ],
 })
 export class AppModule {}
