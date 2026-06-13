@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MemberEntity } from './members/member.entity';
 import { ClassEntity } from './classes/class.entity';
 import { CheckInEntity } from './checkins/checkin.entity';
+import { MembersModule } from './members/members.module';
 
 
 @Module({
@@ -19,6 +20,7 @@ import { CheckInEntity } from './checkins/checkin.entity';
       entities: [MemberEntity, ClassEntity, CheckInEntity],
       synchronize: true,
     }),
+    MembersModule,
   ],
 })
 export class AppModule {}
