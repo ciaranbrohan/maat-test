@@ -25,4 +25,7 @@ export class ClassEntity {
 
   @Column()
   capacity: number;
+
+  @Column('text', { array: true, default: [] })
+  tags: string[];
 }
