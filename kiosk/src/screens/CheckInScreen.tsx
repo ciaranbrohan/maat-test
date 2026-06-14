@@ -1,0 +1,12 @@
+import { View, Text } from 'react-native';
+import { Colors, Typography } from '../theme';
+
+export default function CheckInScreen() {
+  return (
+    <View style={{ flex: 1, backgroundColor: Colors.background, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontFamily: Typography.fontFamily.semibold, fontSize: Typography.size.md, color: Colors.textPrimary }}>
+        Check In
+      </Text>
+    </View>
+  );
+}
