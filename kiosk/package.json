@@ -19,6 +19,7 @@
   "devDependencies": {
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^14.0.0",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.2.2",
     "jest-expo": "^56.0.5",
     "typescript": "~6.0.3"
@@ -32,7 +33,9 @@
   "private": true,
   "jest": {
     "preset": "jest-expo",
-    "setupFilesAfterFramework": ["@testing-library/jest-native/extend-expect"],
+    "setupFilesAfterFramework": [
+      "@testing-library/jest-native/extend-expect"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     }
