@@ -1,0 +1,9 @@
+
+ ## Backend 
+# build output
+backend/dist/
+
+# internal docs
+docs/
+# environment
+backend/.env
