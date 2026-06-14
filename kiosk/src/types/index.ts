@@ -10,17 +10,18 @@ export interface GymClass {
   name: string;
   instructorName: string;
   day: string;
-  time: string;      // "09:00"
+  time: string;
   repeat: string;
-  duration: number;  // minutes
+  duration: number;
   capacity: number;
+  tags: string[];
 }
 
 export interface CheckIn {
   id: string;
   memberId: string;
   classId: string;
-  timestamp: string; // ISO string
+  timestamp: string;
   status: 'confirmed' | 'registered';
 }
 
