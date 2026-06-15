@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { CheckInsService } from './checkins.service';
 import { CreateCheckInDto } from './dto/create-checkin.dto';
 
@@ -15,5 +15,11 @@ export class CheckInsController {
   @HttpCode(200)
   create(@Body() dto: CreateCheckInDto) {
     return this.checkInsService.create(dto);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  remove(@Param('id') id: string) {
+    return this.checkInsService.remove(id);
   }
 }

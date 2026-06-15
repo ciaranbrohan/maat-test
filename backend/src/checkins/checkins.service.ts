@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CheckInEntity } from './checkin.entity';
@@ -27,5 +27,11 @@ export class CheckInsService {
       timestamp: new Date().toISOString(),
       status: 'confirmed',
     });
+  }
+
+  async remove(id: string): Promise<void> {
+    const existing = await this.checkInRepo.findOne({ where: { id } });
+    if (!existing) throw new NotFoundException(`Check-in ${id} not found`);
+    await this.checkInRepo.delete(id);
   }
 }

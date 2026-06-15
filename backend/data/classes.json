@@ -130,5 +130,27 @@
     "duration": 60,
     "capacity": 15,
     "tags": ["BJJ", "KIDS"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
+    "name": "Open Mat",
+    "instructorName": "Ciaran Brohan",
+    "day": "Sunday",
+    "time": "10:00",
+    "repeat": "weekly",
+    "duration": 90,
+    "capacity": 30,
+    "tags": ["BJJ", "MMA"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567802",
+    "name": "Little Ninjas",
+    "instructorName": "Sean Murphy",
+    "day": "Sunday",
+    "time": "09:00",
+    "repeat": "weekly",
+    "duration": 45,
+    "capacity": 15,
+    "tags": ["KIDS"]
   }
 ]
