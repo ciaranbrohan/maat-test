@@ -1,6 +1,10 @@
+import { Platform } from 'react-native';
 import { GymClass, Member, CheckIn } from '../types';
 
-const BASE_URL = 'http://localhost:3000';
+// Android emulator routes to host via 10.0.2.2; iOS simulator uses localhost
+const BASE_URL = Platform.OS === 'android'
+  ? 'http://10.0.2.2:3000'
+  : 'http://localhost:3000';
 
 const API_KEY = 'kiosk-dev-key';
 
