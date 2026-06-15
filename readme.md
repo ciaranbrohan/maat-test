@@ -1,266 +1,129 @@
-# MAAT's Kiosk Application
-
-> **Time-box**: Maximum 2 days of work
-> **AI tools**: Encouraged
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Requirements](#requirements)
-- [Technical Specifications](#technical-specifications)
-- [Design Guidelines](#design-guidelines)
-- [Evaluation Criteria](#evaluation-criteria)
-- [Deliverables](#deliverables)
-
-## Overview
-
-Build a **Gym Kiosk application** that allows gym members to check in for today's classes. This project tests your ability to:
-
-- Translate design references into functional UI
-- Build intuitive user flows
-- Write clean, maintainable code
-- Make sensible product decisions within time constraints
-
-You will receive a **Figma file featuring the initial screen**. This is **not a complete design system**, but a reference for visual style, spacing, tone, and overall approach. Your task is to follow this visual language and creatively extend it to additional screens.
-
-## Requirements
-
-### 1. Visual Design
-
-**Reference**: Use the provided Figma file as your style guide
-
-The Figma includes:
-- Typography examples
-- Button styles
-- Layout conventions
-- Overall aesthetic direction
-
-**Resources**:
-- [MAAT's Kiosk Concept File](https://www.figma.com/design/yZiTpnsOb9E8v0lUHRHNB9/MAAT-Kiosk-Concept?node-id=0-1&m=dev)
-- [Geist Font](https://github.com/vercel/geist-font/)
-
-**Your task**:
-- Recreate the initial screen faithfully
-- Extend the design language to additional screens
-- Maintain visual consistency across all UI elements
-
-**Note**: Pixel-perfection is not expected, but **design coherence** is required.
-
-### 2. Core User Flow
-
-Implement the following screens and functionality:
-
-#### **A. Home / Entry Screen**
-Based on the Figma style:
-- [ ] Display welcome state
-- [ ] Show today's classes
-- [ ] Provide navigation to class details
-
-#### **B. Class Screen**
-Internal overview of the selected class:
-- [ ] Display basic class information (name, time, instructor, etc.)
-- [ ] Show list of attendees with:
-  - Display name
-  - Profile picture
-  - Status (e.g., confirmed, registered)
-  - Registration time (optional)
-- [ ] Provide ability to add new check-ins
-
-#### **C. Member Search**
-- [ ] Implement search by name (simple client-side filter is sufficient)
-- [ ] Display scrollable list of members
-- [ ] Show "no results" state when search yields no matches
-
-#### **D. Member Check-In**
-After selecting a member:
-- [ ] Display member's name
-- [ ] Show today's date
-- [ ] Present clear call-to-action: **"Check In"** button
-- [ ] Handle check-in action
-
-#### **E. Success State**
-After successful check-in:
-- [ ] Show confirmation screen
-- [ ] Auto-reset to home screen after 2–3 seconds
-- [ ] Ensure kiosk returns to "ready" state
-
-### 3. Data Layer
-
-Choose the approach that best fits your strengths:
-
-#### **Option A: Local JSON** (Recommended for simplicity)
-
-Create a `members.json` file with structure:
-
-```json
-[
-  {
-    "id": "123",
-    "firstName": "Anna",
-    "lastName": "Rossi",
-    "profilePicture": "https://..."
-  },
-  {
-    "id": "124",
-    "firstName": "Marco",
-    "lastName": "Lopez",
-    "profilePicture": "https://..."
-  }
-]
-```
-
-**Implementation**:
-- Load JSON at app startup
-- Store check-ins in memory or local storage
-- Create similar JSON structure for classes/sessions
-
-#### **Option B: Minimal API** (Optional, if you enjoy backend)
-
-Expose basic endpoints:
-- `GET /members` - List all members
-- `GET /classes` - List today's classes
-- `POST /checkins` - Record a check-in
-
-Any stack is acceptable (Firebase, Supabase, Nest, Go, Rails, etc.)
-
-### 4. Optional Enhancements
-
-This project intentionally leaves room for creativity. Consider adding:
-
-- Smooth animations or transitions
-- Kiosk lock mode (prevent access to device functions)
-- QR code-based check-in
-- Offline-first mode with sync
-- Any feature that demonstrates your product thinking
-
-**Remember**: Quality over quantity. A few well-executed features are better than many half-finished ones.
-
-## Technical Specifications
-
-### Platform Choice
-
-Choose any mobile technology:
-- **Cross-platform**: Flutter, React Native, Kotlin Multiplatform
-- **Native**: SwiftUI (iOS), Jetpack Compose (Android)
-
-### Architecture Recommendations
-
-Consider implementing:
-- Clear separation of concerns (UI, business logic, data)
-- State management appropriate to your chosen stack
-- Reusable components
-- Proper error handling
-
-## Design Guidelines
-
-### Key Principles
-
-1. **Kiosk-First UX**
-   - Large, tappable targets
-   - Clear visual hierarchy
-   - Minimal text input requirements
-   - Auto-reset flows
-
-2. **Consistency**
-   - Follow Figma's visual language
-   - Maintain consistent spacing
-   - Use the same color palette
-   - Keep typography hierarchy
-
-3. **States to Consider**
-   - Loading states
-   - Empty states (no classes, no members)
-   - Error states (failed check-in)
-   - Success states
-
-## Evaluation Criteria
-
-Your submission will be evaluated on:
-
-### 🎨 Design (25%)
-- Faithfulness to Figma's visual style
-- Coherent extension of UI patterns to new screens
-- Readable, friendly kiosk interface
-- Thoughtful UX decisions
-
-### 💻 Code Quality (25%)
-- Clear architecture and project structure
-- Separation of concerns
-- Thoughtful state management
-- Readable and well-organized code
-- Appropriate use of platform/framework patterns
-
-### 🎯 User Experience (25%)
-- Smooth, intuitive flows
-- Clear error and empty states
-- Attention to edge cases
-
-### 🧠 Ownership & Trade-offs (25%)
-- Clear reasoning for technical choices
-- Sensible scope management
-- Documentation of trade-offs and decisions
-- Awareness of what could be improved with more time
-
-### ⭐ Bonus Points
-- Smooth animations and transitions
-- Offline-first approach
-- Integration tests
-- Creative features that enhance the experience
-
-## Deliverables
-
-Please submit:
-
-1. **Repository Link**
-   - Public GitHub repo
-
-2. **Running Instructions**
-   - Clear setup steps
-   - Required dependencies
-   - How to run the app
-
-3. **README** (optional)
-   - Brief architecture overview
-   - Key design decisions
-   - Trade-offs you made
-   - What you would add/improve with more time
-   - Known limitations or bugs
-
-### README Template for Your Submission
-
-```markdown
-# Gym Kiosk - [Your Name]
+# Gym Kiosk — Ciaran Brohan
 
 ## Architecture
 
-[Brief overview of your architectural choices]
+Five-screen native stack (Home → Class → MemberSearch → CheckIn → Success) backed by a NestJS REST API and PostgreSQL. All data is fetched once at startup and held in a Zustand store; new check-ins are appended locally immediately after the API confirms, so the UI never waits for a second round-trip.
+
+```
+kiosk/          React Native (Expo) app
+  src/
+    screens/    Home, Class, MemberSearch, CheckIn, Success — one file per screen, no logic leaks into navigation
+    components/ ClassCard, TagChip, HeroBanner, PromoBanner
+    services/   api.ts — single thin wrapper around fetch
+    store/      useAppStore.ts — Zustand, three slices: classes, members, checkIns
+    utils/      time.ts — date/time formatting
+    theme/      Colours, typography, spacing, radius tokens
+
+backend/        NestJS API
+  src/
+    classes/    GET /classes
+    members/    GET /members
+    checkins/   GET /checkins, POST /checkins, DELETE /checkins/:id
+    seed/       Seeds classes and members on first boot
+```
 
 ## Tech Stack
 
-- Platform: [Flutter/React Native/etc.]
-- State Management: [Your choice]
-- Additional libraries: [List key dependencies]
+- **Platform**: React Native, Expo SDK 56
+- **State management**: Zustand 5
+- **Navigation**: React Navigation 7 (native stack)
+- **Animations**: moti (react-native-reanimated)
+- **Offline / connectivity**: AsyncStorage, NetInfo
+- **Kiosk utilities**: expo-keep-awake, expo-screen-orientation, expo-haptics
+- **Backend**: NestJS 11, TypeORM, PostgreSQL (Docker)
+- **Validation**: class-validator, class-transformer
+- **Testing**: Jest, React Native Testing Library
 
 ## Design Decisions
 
-[Key decisions you made and why]
+**Option B (API) over Option A (local JSON)** — check-ins persist across restarts and the pattern is realistic for a production kiosk. Adds a Docker step but the seed service means the database populates on initial startup with no manual intervention.
 
-## Trade-offs
+**Filter checked-in members from the search list** — rather than let the user pick someone and hit an API error, already-checked-in members simply don't appear. The empty state distinguishes "no match for your search" from "everyone is already checked in."
 
-[What you prioritized and what you deprioritized]
+**`navigation.reset()` on the Success screen** — clears the entire navigation stack so the back gesture is unavailable and the kiosk returns to a genuinely clean state rather than a Home screen with history behind it.
+
+**Initials fallback for profile pictures** — ClassScreen loads real profile images with an `onError` fallback to initials. MemberSearch uses initials only; loading dozens of remote images in a long scrollable list without an image-caching library felt like the wrong trade-off for a time-boxed assessment.
+
+**API key authentication** — every request from the kiosk carries an `x-api-key` header; the backend validates it against `process.env.API_KEY` via a global NestJS guard. Simple, stateless, and appropriate for a single-client kiosk — no session management or token refresh needed.
+
+## Beyond the Spec
+
+Features added that weren't required but improve the experience:
+
+- **Haptic feedback on check-in** — tactile confirmation the moment it succeeds; important for a physical kiosk where the member may not be looking directly at the screen
+- **Capacity progress bar on class cards** — members can see at a glance which classes still have spots before navigating in
+- **Offline-first check-in queue** — check-ins queue in AsyncStorage when offline and sync automatically on reconnect, surviving app restarts
+- **Soft kiosk lock** — screen stays awake, orientation locked to portrait, status bar hidden; the device behaves like an appliance
+- **Staff PIN to remove check-ins** — long-pressing the "Attendees" header prompts for a 4-digit PIN; correct entry reveals a per-row delete button backed by `DELETE /checkins/:id`. The feature is hidden enough that members won't stumble on it, but staff can correct mistakes without an admin portal. Brute-force protection locks the keypad for 30 seconds after 5 failed attempts. Staff mode auto-locks after 30 seconds of inactivity. The PIN is configurable via `EXPO_PUBLIC_STAFF_PIN` in `kiosk/.env` (defaults to `1234`)
+- **Undo delete** — deleting a check-in shows a 3-second toast with an Undo button; the API call is deferred until the window closes, so accidental taps are recoverable without touching the backend
+- **Avatar stack on class cards** — up to four checked-in member avatars are shown overlapping on each home-screen card so staff can see at a glance who's in each session
+- **"Next up" badge** — the class starting soonest is highlighted so members don't have to mentally parse start times
+- **Pull-to-refresh** — the home screen can be refreshed with a swipe to pick up schedule changes without restarting the app
+
+## Trade-offs & Known Limitations
+
+- **Success screen animation** — the checkmark uses a moti spring entrance. A full Lottie celebration animation would be a nicer touch but felt out of scope for the time-box; Lottie also adds non-trivial bundle weight.
+- **Soft kiosk lock mode** — screen stays awake (`expo-keep-awake`), orientation is locked to portrait (`expo-screen-orientation`), the status bar is hidden, and `navigation.reset()` clears the back stack on success. True Guided Access (iOS) or app pinning (Android) would require MDM configuration outside the app.
+- **Static API key and staff PIN** — the kiosk sends an `x-api-key` header validated by the backend, and the staff PIN is set via `EXPO_PUBLIC_STAFF_PIN`. Both live in `.env` files; a production deployment would rotate the API key via a secret manager and validate the PIN server-side rather than bundling it in the client.
+- **No integration tests** — unit tests cover components and store logic; integration tests across the full check-in flow (kiosk → API → database) weren't written within the time-box.
+- **Tested in IOS Simulator only** — the app has not been validated on a physical devices or Android Emulator; behaviour may differ, particularly around network (LAN IP vs. `localhost`) and haptics.
 
 ## Future Improvements
 
-[What you would add with more time]
+- Lottie celebration animation on the success screen
+- True kiosk lock via MDM-configured Guided Access (iOS) or app pinning (Android)
+- QR code check-in as an alternative to name search
+- Expo Image (or similar) for cached profile pictures in the member list
+- Server-side PIN validation so the staff passcode isn't bundled in the client
+- "You've been X times this month" stat on the success screen using historical check-in data
+- Integration tests covering the full check-in flow (kiosk → API → database)
+- Physical device testing (iOS + Android) to catch network and haptic edge cases
+- **TanStack Query for server state** — replace the fetch-once Zustand model with TanStack Query handling classes, members, and check-ins (caching, background refetch, stale-while-revalidate); Zustand would be retained for client-only UI state (offline queue, staff mode, modals)
+- **Real-time cross-device sync** — add a WebSocket or SSE channel from the NestJS backend (via `@nestjs/websockets`) emitting `checkin.created` / `checkin.deleted` events so check-ins on one kiosk invalidate the query cache on all connected devices immediately
+
 
 ## Running the App
 
-[Step-by-step instructions]
+### Prerequisites
+
+- Node 20+
+- Docker (for PostgreSQL)
+- Expo Go on your device, or an iOS Simulator / Android Emulator
+
+### Backend
+
+copy .env.example to .env
+
+```bash
+cd backend
+docker compose up -d                  # starts PostgreSQL on port 5432
+npm install
+npm run start:dev                     # API on http://localhost:3000
 ```
 
-## Questions?
+The seed service runs automatically and populates classes and members if the tables are empty.
 
-If you have questions about requirements or need clarification, please reach out. We want you to succeed!
+### Kiosk
 
-Good luck and have fun building! 🚀
+> **Physical device**: before running, update `BASE_URL` in `kiosk/src/services/api.ts` from `localhost` to your machine's LAN IP (e.g. `192.168.1.x`). Expo Go on a physical device cannot reach `localhost` on your Mac.
 
+copy .env.example to .env
+```bash
+cd kiosk
+npm install
+npx expo start
+```
+
+Press `i` for iOS Simulator, `a` for Android, or scan the QR code with Expo Go.
+
+> **Staff PIN**: defaults to `1234`. Override by creating `kiosk/.env` with `EXPO_PUBLIC_STAFF_PIN=your_pin`.
+
+### Tests
+
+```bash
+# kiosk
+cd kiosk && npx jest
+
+# backend
+cd backend && npm run test
+```
