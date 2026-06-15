@@ -11,6 +11,8 @@ import { Colors, Typography, Spacing, Radius } from '../theme';
 import { formatTimeRange } from '../utils/time';
 import { RootStackParamList, CheckIn, Member } from '../types';
 import TagChip from '../components/TagChip';
+import PinModal from '../components/PinModal';
+import { api } from '../services/api';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Class'>;
 type Route = RouteProp<RootStackParamList, 'Class'>;
@@ -58,7 +60,9 @@ export default function ClassScreen() {
   const navigation = useNavigation<Nav>();
   const route = useRoute<Route>();
   const { classId } = route.params;
-  const { classes, members, checkIns } = useAppStore();
+  const { classes, members, checkIns, removeCheckIn } = useAppStore();
+  const [staffUnlocked, setStaffUnlocked] = useState(false);
+  const [pinVisible, setPinVisible] = useState(false);
 
   const gymClass = classes.find((c) => c.id === classId);
 
@@ -114,7 +118,11 @@ export default function ClassScreen() {
         </View>
       </View>
 
-      <Text style={styles.sectionTitle}>Attendees ({classCheckIns.length})</Text>
+      <TouchableOpacity onLongPress={() => setPinVisible(true)} delayLongPress={800}>
+        <Text style={styles.sectionTitle}>
+          Attendees ({classCheckIns.length}){staffUnlocked ? '  🔓' : ''}
+        </Text>
+      </TouchableOpacity>
 
       {attendees.length === 0 && (
         <View style={styles.centered}>
@@ -133,6 +141,15 @@ export default function ClassScreen() {
     </TouchableOpacity>
   );
 
+  const handleDelete = async (checkInId: string) => {
+    try {
+      await api.deleteCheckIn(checkInId);
+    } catch {
+      // optimistic-remove regardless; pending check-ins have no server record
+    }
+    removeCheckIn(checkInId);
+  };
+
   const renderItem = ({ item }: { item: AttendeeRow }) => {
     const time = new Date(item.checkIn.timestamp).toLocaleTimeString('en-IE', {
       hour: '2-digit',
@@ -145,6 +162,11 @@ export default function ClassScreen() {
         <Text style={styles.memberName}>{fullName}</Text>
         <StatusChip status={item.checkIn.status} />
         <Text style={styles.timestamp}>{time}</Text>
+        {staffUnlocked && (
+          <TouchableOpacity onPress={() => handleDelete(item.checkIn.id)} style={styles.deleteButton}>
+            <Text style={styles.deleteText}>✕</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
@@ -159,6 +181,11 @@ export default function ClassScreen() {
         ListFooterComponent={ListFooter}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+      />
+      <PinModal
+        visible={pinVisible}
+        onSuccess={() => { setStaffUnlocked(true); setPinVisible(false); }}
+        onDismiss={() => setPinVisible(false)}
       />
     </SafeAreaView>
   );
@@ -284,5 +311,18 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.regular,
     fontSize: Typography.size.sm,
     color: Colors.textSecondary,
+  },
+  deleteButton: {
+    width: 28,
+    height: 28,
+    borderRadius: Radius.full,
+    backgroundColor: Colors.error,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteText: {
+    fontFamily: Typography.fontFamily.semibold,
+    fontSize: Typography.size.xs,
+    color: '#fff',
   },
 });

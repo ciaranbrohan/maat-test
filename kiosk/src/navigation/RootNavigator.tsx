@@ -17,7 +17,7 @@ export default function RootNavigator() {
         <Stack.Screen name="Class" component={ClassScreen} />
         <Stack.Screen name="MemberSearch" component={MemberSearchScreen} />
         <Stack.Screen name="CheckIn" component={CheckInScreen} />
-        <Stack.Screen name="Success" component={SuccessScreen} />
+        <Stack.Screen name="Success" component={SuccessScreen} options={{ animation: 'fade' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity,
-  ActivityIndicator, StyleSheet,
+  ActivityIndicator, StyleSheet, useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAppStore } from '../store/useAppStore';
 import { Colors, Typography, Spacing, Radius } from '../theme';
-import { formatDate } from '../utils/time';
+import { formatDate, nextUpClassId } from '../utils/time';
 import { RootStackParamList, GymClass } from '../types';
 import ClassCard from '../components/ClassCard';
 import HeroBanner from '../components/HeroBanner';
@@ -20,13 +20,25 @@ const TODAY_NAME = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
 export default function HomeScreen() {
   const navigation = useNavigation<Nav>();
-  const { classes, checkIns, loading, error, loadInitialData } = useAppStore();
+  const { classes, members, checkIns, loading, error, loadInitialData } = useAppStore();
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768;
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadInitialData();
   }, []);
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await loadInitialData();
+    setRefreshing(false);
+  };
+
   const todaysClasses = classes.filter((c) => c.day === TODAY_NAME);
+  const nextUpId = nextUpClassId(todaysClasses);
+  const isSingle = todaysClasses.length === 1;
+  const numColumns = isSingle ? 1 : 2;
 
   const attendeeCount = (classId: string) =>
     checkIns.filter((ci) => ci.classId === classId).length;
@@ -69,25 +81,42 @@ export default function HomeScreen() {
     </View>
   );
 
-  const renderItem = ({ item }: { item: GymClass }) => (
-    <ClassCard
-      gymClass={item}
-      attendeeCount={attendeeCount(item.id)}
-      onPress={() => navigation.navigate('Class', { classId: item.id })}
-    />
-  );
+  const renderItem = ({ item }: { item: GymClass }) => {
+    const stackMembers = checkIns
+      .filter((ci) => ci.classId === item.id)
+      .slice(0, 4)
+      .map((ci) => members.find((m) => m.id === ci.memberId))
+      .filter((m): m is NonNullable<typeof m> => m != null);
+
+    const card = (
+      <ClassCard
+        gymClass={item}
+        attendeeCount={attendeeCount(item.id)}
+        isNextUp={item.id === nextUpId}
+        stackMembers={stackMembers}
+        onPress={() => navigation.navigate('Class', { classId: item.id })}
+      />
+    );
+    if (isSingle && isTablet) {
+      return <View style={styles.singleCardTablet}>{card}</View>;
+    }
+    return card;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
+        key={numColumns}
         data={loading || error ? [] : todaysClasses}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        numColumns={2}
+        numColumns={numColumns}
         ListHeaderComponent={ListHeader}
         ListFooterComponent={ListFooter}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
       />
     </SafeAreaView>
   );
@@ -157,5 +186,8 @@ const styles = StyleSheet.create({
     fontSize: Typography.size.xs,
     color: Colors.textSecondary,
     textAlign: 'center',
+  },
+  singleCardTablet: {
+    width: '50%',
   },
 });

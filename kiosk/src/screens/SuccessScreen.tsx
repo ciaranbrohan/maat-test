@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MotiView, MotiText } from 'moti';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Colors, Typography, Spacing } from '../theme';
@@ -23,11 +24,33 @@ export default function SuccessScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.centre}>
-        <Text style={styles.checkmark}>✓</Text>
-        <Text style={styles.memberName}>{memberName}</Text>
-        <Text style={styles.className}>checked into {className}</Text>
-      </View>
+      <MotiView style={styles.centre}>
+        <MotiView
+          from={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', damping: 12, stiffness: 180 }}
+        >
+          <Text style={styles.checkmark}>✓</Text>
+        </MotiView>
+
+        <MotiText
+          style={styles.memberName}
+          from={{ opacity: 0, translateY: 12 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ type: 'timing', duration: 350, delay: 250 }}
+        >
+          {memberName}
+        </MotiText>
+
+        <MotiText
+          style={styles.className}
+          from={{ opacity: 0, translateY: 8 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ type: 'timing', duration: 300, delay: 420 }}
+        >
+          checked into {className}
+        </MotiText>
+      </MotiView>
     </SafeAreaView>
   );
 }

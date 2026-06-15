@@ -25,6 +25,13 @@ export interface CheckIn {
   status: 'confirmed' | 'registered';
 }
 
+export interface PendingCheckIn {
+  localId: string;
+  memberId: string;
+  classId: string;
+  timestamp: string;
+}
+
 export type RootStackParamList = {
   Home: undefined;
   Class: { classId: string };

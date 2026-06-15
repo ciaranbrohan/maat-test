@@ -21,6 +21,26 @@ export function formatTimeRange(time: string, durationMinutes: number): string {
   return `${time}—${end}h`;
 }
 
+export function nextUpClassId(classes: { id: string; time: string; duration: number }[]): string | null {
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+
+  let nextId: string | null = null;
+  let minDiff = Infinity;
+
+  for (const c of classes) {
+    const [h, m] = c.time.split(':').map(Number);
+    const startMins = h * 60 + m;
+    const diff = startMins - nowMins;
+    if (diff > 0 && diff < minDiff) {
+      minDiff = diff;
+      nextId = c.id;
+    }
+  }
+
+  return nextId;
+}
+
 export function formatDate(date: Date): string {
   const day = date.getDate();
   return `${DAYS[date.getDay()]}, ${day}${ordinalSuffix(day)} ${MONTHS[date.getMonth()]}`;

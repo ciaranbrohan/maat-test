@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator,
+  View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator,
 } from 'react-native';
+import { MotiView } from 'moti';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAppStore } from '../store/useAppStore';
 import { api } from '../services/api';
+import * as Haptics from 'expo-haptics';
 import { Colors, Typography, Spacing, Radius } from '../theme';
 import { formatDate } from '../utils/time';
 import { RootStackParamList } from '../types';
@@ -14,13 +16,24 @@ import { RootStackParamList } from '../types';
 type Nav = NativeStackNavigationProp<RootStackParamList, 'CheckIn'>;
 type Route = RouteProp<RootStackParamList, 'CheckIn'>;
 
-function Avatar({ name }: { name: string }) {
+function Avatar({ name, uri }: { name: string; uri: string }) {
+  const [imgError, setImgError] = useState(false);
   const initials = name
     .split(' ')
     .slice(0, 2)
     .map((n) => n[0])
     .join('')
     .toUpperCase();
+
+  if (uri && !imgError) {
+    return (
+      <Image
+        source={{ uri }}
+        style={styles.avatar}
+        onError={() => setImgError(true)}
+      />
+    );
+  }
   return (
     <View style={styles.avatar}>
       <Text style={styles.avatarText}>{initials}</Text>
@@ -32,7 +45,7 @@ export default function CheckInScreen() {
   const navigation = useNavigation<Nav>();
   const route = useRoute<Route>();
   const { classId, memberId } = route.params;
-  const { classes, members, addCheckIn } = useAppStore();
+  const { classes, members, addCheckIn, addPendingCheckIn } = useAppStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -67,10 +80,21 @@ export default function CheckInScreen() {
     try {
       const result = await api.postCheckIn(memberId, classId);
       addCheckIn(result);
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       navigation.navigate('Success', { memberName, className: gymClass.name });
     } catch (err) {
-      setError((err as Error).message);
-      setLoading(false);
+      // TypeError means fetch couldn't reach the server (offline / no network)
+      if (err instanceof TypeError) {
+        const localId = `pending_${Date.now()}`;
+        const timestamp = new Date().toISOString();
+        addCheckIn({ id: localId, memberId, classId, timestamp, status: 'registered' });
+        await addPendingCheckIn({ localId, memberId, classId, timestamp });
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        navigation.navigate('Success', { memberName, className: gymClass.name });
+      } else {
+        setError((err as Error).message);
+        setLoading(false);
+      }
     }
   };
 
@@ -81,12 +105,18 @@ export default function CheckInScreen() {
           <Text style={styles.backText}>← Back</Text>
         </TouchableOpacity>
 
-        <View style={styles.centre}>
-          <Avatar name={memberName} />
+        <MotiView
+          style={styles.centre}
+          from={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ type: 'timing', duration: 380 }}
+        >
+          <Avatar name={memberName} uri={member.profilePicture} />
           <Text style={styles.memberName}>{memberName}</Text>
+          <Text style={styles.className}>{gymClass.name}</Text>
           <Text style={styles.date}>{formatDate(new Date())}</Text>
           {error && <Text style={styles.errorText}>{error}</Text>}
-        </View>
+        </MotiView>
 
         <TouchableOpacity
           style={[styles.ctaButton, loading && styles.ctaDisabled]}
@@ -145,6 +175,12 @@ const styles = StyleSheet.create({
   memberName: {
     fontFamily: Typography.fontFamily.bold,
     fontSize: Typography.size.xl,
+    color: Colors.textPrimary,
+    textAlign: 'center',
+  },
+  className: {
+    fontFamily: Typography.fontFamily.semibold,
+    fontSize: Typography.size.md,
     color: Colors.textPrimary,
     textAlign: 'center',
   },
