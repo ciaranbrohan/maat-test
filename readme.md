@@ -66,7 +66,7 @@ Features added that weren't required but improve the experience:
 - **Soft kiosk lock mode** — screen stays awake (`expo-keep-awake`), orientation is locked to portrait (`expo-screen-orientation`), the status bar is hidden, and `navigation.reset()` clears the back stack on success. True Guided Access (iOS) or app pinning (Android) would require MDM configuration outside the app.
 - **Static API key and staff PIN** — the kiosk sends an `x-api-key` header validated by the backend, and the staff PIN is set via `EXPO_PUBLIC_STAFF_PIN`. Both live in `.env` files; a production deployment would rotate the API key via a secret manager and validate the PIN server-side rather than bundling it in the client.
 - **No integration tests** — unit tests cover components and store logic; integration tests across the full check-in flow (kiosk → API → database) weren't written within the time-box.
-- **Tested in IOS Simulator only** — the app has not been validated on a physical devices or Android Emulator; behaviour may differ, particularly around network (LAN IP vs. `localhost`) and haptics.
+- **Tested in IOS/Android Simulator only** — the app has not been validated on a physical devices; behaviour may differ, particularly around network (LAN IP vs. `localhost`) and haptics.
 
 ## Future Improvements
 
