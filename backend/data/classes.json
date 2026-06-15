@@ -66,6 +66,17 @@
     "tags": ["BJJ", "MMA"]
   },
   {
+    "id": "c9a2f841-3b7e-4d12-a5e8-1f034c9b6d20",
+    "name": "Essentials Jiu-Jitsu",
+    "instructorName": "Ciaran Brohan",
+    "day": "Monday",
+    "time": "18:00",
+    "repeat": "weekly",
+    "duration": 60,
+    "capacity": 20,
+    "tags": ["BJJ"]
+  },
+  {
     "id": "d40c0d13-1e9c-435f-9a36-31b67c16822b",
     "name": "Nogi Jiu-Jitsu",
     "instructorName": "Ciaran Brohan",
@@ -73,7 +84,7 @@
     "time": "19:15",
     "repeat": "weekly",
     "duration": 75,
-    "capacity": 25,
+    "capacity": 15,
     "tags": ["BJJ"]
   },
   {

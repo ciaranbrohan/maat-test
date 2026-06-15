@@ -26,6 +26,7 @@ function InstructorAvatar({ name }: { name: string }) {
   );
 }
 
+
 function AvatarStack({ members }: { members: Member[] }) {
   if (members.length === 0) return null;
   return (
@@ -65,17 +66,24 @@ function CapacityChip({ attendeeCount, capacity }: { attendeeCount: number; capa
 
 export default function ClassCard({ gymClass, attendeeCount, isNextUp, stackMembers = [], onPress }: ClassCardProps) {
   const timeRange = formatTimeRange(gymClass.time, gymClass.duration);
+  const isFull = attendeeCount >= gymClass.capacity;
+  const isNearlyFull = !isFull && attendeeCount / gymClass.capacity >= 0.8;
+  const hasCapacityAlert = isFull || isNearlyFull;
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
-      {isNextUp && (
+      {isNextUp && !hasCapacityAlert && (
         <View style={styles.nextUpBadge}>
           <Text style={styles.nextUpText}>Next up</Text>
         </View>
       )}
-      <InstructorAvatar name={gymClass.instructorName} />
-      <Text style={styles.name} numberOfLines={2}>{gymClass.name}</Text>
-      <Text style={styles.time}>{timeRange}</Text>
+      <View style={styles.header}>
+        <InstructorAvatar name={gymClass.instructorName} />
+        <View style={styles.headerInfo}>
+          <Text style={styles.name} numberOfLines={2}>{gymClass.name}</Text>
+          <Text style={styles.time}>{timeRange}</Text>
+        </View>
+      </View>
       <View style={styles.tags}>
         {gymClass.tags.map((tag) => (
           <TagChip key={tag} label={tag} />
@@ -102,31 +110,40 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     margin: Spacing.xs,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginBottom: Spacing.sm,
+    paddingRight: 56,
+  },
+  headerInfo: {
+    flex: 1,
+    gap: Spacing.xs,
+  },
   avatar: {
-    width: 36,
-    height: 36,
+    width: 64,
+    height: 64,
     borderRadius: Radius.full,
     backgroundColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: Spacing.sm,
+    flexShrink: 0,
   },
   avatarText: {
     fontFamily: Typography.fontFamily.semibold,
-    fontSize: Typography.size.xs,
+    fontSize: Typography.size.md,
     color: Colors.textPrimary,
   },
   name: {
     fontFamily: Typography.fontFamily.semibold,
-    fontSize: Typography.size.sm,
+    fontSize: Typography.size.lg,
     color: Colors.textPrimary,
-    marginBottom: Spacing.xs,
   },
   time: {
     fontFamily: Typography.fontFamily.regular,
-    fontSize: Typography.size.xs,
+    fontSize: Typography.size.sm,
     color: Colors.textSecondary,
-    marginBottom: Spacing.sm,
   },
   tags: {
     flexDirection: 'row',
@@ -134,14 +151,13 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   footer: {
-    borderTopWidth: 1,
-    borderTopColor: Colors.border,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: Spacing.sm,
-    gap: Spacing.xs,
   },
   footerText: {
     fontFamily: Typography.fontFamily.regular,
-    fontSize: Typography.size.xs,
+    fontSize: Typography.size.sm,
     color: Colors.textSecondary,
   },
   avatarStack: {
@@ -169,12 +185,13 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   nextUpBadge: {
-    alignSelf: 'flex-start',
+    position: 'absolute',
+    top: Spacing.md,
+    right: Spacing.md,
     backgroundColor: Colors.accent,
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
-    marginBottom: Spacing.sm,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm
   },
   nextUpText: {
     fontFamily: Typography.fontFamily.semibold,
@@ -182,11 +199,12 @@ const styles = StyleSheet.create({
     color: Colors.accentForeground,
   },
   capacityChip: {
-    alignSelf: 'flex-start',
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
-    marginBottom: Spacing.sm,
+    position: 'absolute',
+    top: Spacing.md,
+    right: Spacing.md,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm
   },
   capacityChipText: {
     fontFamily: Typography.fontFamily.semibold,

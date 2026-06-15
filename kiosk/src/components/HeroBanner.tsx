@@ -10,10 +10,10 @@ export default function HeroBanner() {
     >
       <View style={styles.overlay}>
         <View style={styles.chip}>
-          <Text style={styles.chipLabel}>EXPERIENCES</Text>
+          <Text style={styles.chipLabel}>SEMINAR</Text>
         </View>
-        <Text style={styles.title}>Summer BJJ Bootcamp</Text>
-        <Text style={styles.subtitle}>Roll more, learn more, sweat more. Summer starts on the mat.</Text>
+        <Text style={styles.title}>Gordon Ryan Seminar</Text>
+        <Text style={styles.subtitle}>Train with one of the best ever.</Text>
       </View>
     </ImageBackground>
   );
@@ -21,7 +21,7 @@ export default function HeroBanner() {
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    height: 300,
     borderRadius: Radius.md,
     overflow: 'hidden',
     marginBottom: Spacing.lg,
@@ -40,25 +40,25 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: Spacing.sm,
-    paddingVertical: 2,
-    borderRadius: Radius.full,
+    paddingVertical: Spacing.sm,
+    borderRadius: Radius.md,
     marginBottom: Spacing.sm,
   },
   chipLabel: {
-    fontFamily: Typography.fontFamily.semibold,
+    fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.size.xs,
     color: Colors.background,
     letterSpacing: 1,
   },
   title: {
     fontFamily: Typography.fontFamily.bold,
-    fontSize: Typography.size.xl,
+    fontSize: Typography.size.xxl,
     color: Colors.background,
     marginBottom: Spacing.xs,
   },
   subtitle: {
     fontFamily: Typography.fontFamily.regular,
-    fontSize: Typography.size.sm,
+    fontSize: Typography.size.md,
     color: 'rgba(255,255,255,0.8)',
   },
 });

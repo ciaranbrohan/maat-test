@@ -18,7 +18,7 @@ export default function App() {
 
   useEffect(() => {
     KeepAwake.activateKeepAwakeAsync();
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP).catch(() => {});
     StatusBar.setHidden(true, 'none');
     loadPendingCheckIns();
 

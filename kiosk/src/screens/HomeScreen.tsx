@@ -38,7 +38,7 @@ export default function HomeScreen() {
   const todaysClasses = classes.filter((c) => c.day === TODAY_NAME);
   const nextUpId = nextUpClassId(todaysClasses);
   const isSingle = todaysClasses.length === 1;
-  const numColumns = isSingle ? 1 : 2;
+  const numColumns = isTablet && !isSingle ? 2 : 1;
 
   const attendeeCount = (classId: string) =>
     checkIns.filter((ci) => ci.classId === classId).length;
@@ -46,7 +46,7 @@ export default function HomeScreen() {
   const ListHeader = () => (
     <View style={styles.header}>
       <Text style={styles.dateLabel}>{formatDate(new Date())}</Text>
-      <Text style={styles.welcome}>Welcome to 🥋 Aranha</Text>
+      <Text style={styles.welcome}>Welcome to T45 Jiujitsu</Text>
       <HeroBanner />
       <Text style={styles.sectionTitle}>Today's classes</Text>
       {loading && (
@@ -75,7 +75,7 @@ export default function HomeScreen() {
       <PromoBanner />
       <View style={styles.tip}>
         <Text style={styles.tipText}>
-          📱 Pro tip: Open your MAAT app and bump this device, you will be checked in automatically.
+          📱 Pro tip: Insert tip here!
         </Text>
       </View>
     </View>
@@ -98,7 +98,10 @@ export default function HomeScreen() {
       />
     );
     if (isSingle && isTablet) {
-      return <View style={styles.singleCardTablet}>{card}</View>;
+      const contentWidth = width - Spacing.md * 2;
+      const cardWidth = Math.floor(contentWidth / 2);
+      const offset = Math.floor(contentWidth / 4);
+      return <View style={{ marginLeft: offset, width: cardWidth }}>{card}</View>;
     }
     return card;
   };
@@ -141,13 +144,13 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontFamily: Typography.fontFamily.bold,
-    fontSize: Typography.size.xl,
+    fontSize: Typography.size.xxxl,
     color: Colors.textPrimary,
     marginBottom: Spacing.lg,
   },
   sectionTitle: {
     fontFamily: Typography.fontFamily.semibold,
-    fontSize: Typography.size.lg,
+    fontSize: Typography.size.xl,
     color: Colors.textPrimary,
     marginBottom: Spacing.md,
   },
@@ -186,8 +189,5 @@ const styles = StyleSheet.create({
     fontSize: Typography.size.xs,
     color: Colors.textSecondary,
     textAlign: 'center',
-  },
-  singleCardTablet: {
-    width: '50%',
   },
 });

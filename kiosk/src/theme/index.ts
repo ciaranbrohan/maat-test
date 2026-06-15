@@ -17,22 +17,26 @@ export const Colors = {
   } as Record<string, string>,
 } as const;
 
+import { Platform } from 'react-native';
+
 export const Typography = {
   fontFamily: {
     regular: 'Geist-Regular',
     medium: 'Geist-Medium',
     semibold: 'Geist-SemiBold',
     bold: 'Geist-Bold',
+    mono: Platform.select({ ios: 'Courier New', android: 'monospace' }) as string,
   },
   size: {
     xs: 12,
-    sm: 14,
-    md: 16,
+    sm: 16,
+    md: 18,
     lg: 20,
-    xl: 28,
+    xl: 32,
     xxl: 40,
+    xxxl: 48
   },
-} as const;
+};
 
 export const Spacing = {
   xs: 4,

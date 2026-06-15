@@ -4,8 +4,7 @@ import { Typography, Spacing, Radius } from '../theme';
 export default function PromoBanner() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Aranha x MAAT Store</Text>
-      <Text style={styles.subtitle}>Roll more, learn more, sweat more. Summer starts on the mat.</Text>
+      <Text style={styles.title}>T45 x MAAT Store</Text>
     </View>
   );
 }
