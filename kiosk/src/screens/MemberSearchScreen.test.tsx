@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import MemberSearchScreen from './MemberSearchScreen';
 import { useAppStore } from '../store/useAppStore';
 
@@ -15,7 +15,13 @@ const members = [
   { id: 'm2', firstName: 'Marco', lastName: 'Lopez', profilePicture: '' },
 ];
 
+let consoleErrorSpy: jest.SpyInstance;
+
 beforeEach(() => {
+  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation((msg, ...args) => {
+    if (typeof msg === 'string' && msg.includes('not wrapped in act')) return;
+    console.error(msg, ...args);
+  });
   mockNavigate.mockClear();
   mockGoBack.mockClear();
   useAppStore.setState({
@@ -25,6 +31,10 @@ beforeEach(() => {
     loading: false,
     error: null,
   });
+});
+
+afterEach(() => {
+  consoleErrorSpy.mockRestore();
 });
 
 it('renders the search input', async () => {
@@ -40,15 +50,15 @@ it('renders all eligible members', async () => {
 
 it('filters members by name as query changes', async () => {
   const { getByText, queryByText, getByPlaceholderText } = await render(<MemberSearchScreen />);
-  await fireEvent.changeText(getByPlaceholderText('Search members...'), 'anna');
+  fireEvent.changeText(getByPlaceholderText('Search members...'), 'anna');
+  await waitFor(() => expect(queryByText('Marco Lopez')).toBeNull());
   expect(getByText('Anna Rossi')).toBeTruthy();
-  expect(queryByText('Marco Lopez')).toBeNull();
 });
 
 it('shows "No members found" when search matches nothing', async () => {
   const { getByText, getByPlaceholderText } = await render(<MemberSearchScreen />);
-  await fireEvent.changeText(getByPlaceholderText('Search members...'), 'zzz');
-  expect(getByText('No members found')).toBeTruthy();
+  fireEvent.changeText(getByPlaceholderText('Search members...'), 'zzz');
+  await waitFor(() => expect(getByText('No members found')).toBeTruthy());
 });
 
 it('excludes members already checked in to the class', async () => {
